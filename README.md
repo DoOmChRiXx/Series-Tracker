@@ -1,9 +1,11 @@
 # 📺 Series Tracker
+![GitHub release](https://img.shields.io/github/v/release/DoOmChRiXx/Series-Tracker)
 
 Track your TV series across platforms in a simple, clean and centralized way.
 
 A small personal tool I built to keep all my shows organized:  
 list them, edit them, and track progress — all in one place.
+
 
 ---
 
@@ -47,7 +49,7 @@ You can either:
 Just download, unzip, and run.
 
 👉 **Both versions are available here:**  
-[https://github.com/DoOmChRiXx/Series-Tracker/releases]
+[Download release](https://github.com/DoOmChRiXx/Series-Tracker/releases)
 
 ---
 
