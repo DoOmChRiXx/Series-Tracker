@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <RootNamespace>Series_Tracker</RootNamespace>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+    <ApplicationIcon>TV256.ico</ApplicationIcon>
+    <Title>Series Tracker</Title>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\img\TV256.ico" />
+    <None Remove="Resources\PubVars.cs~RF4395de5.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="TV256.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\img\TV256.ico" />
+  </ItemGroup>
+
+</Project>

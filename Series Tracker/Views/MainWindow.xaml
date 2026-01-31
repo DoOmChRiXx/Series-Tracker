@@ -1,0 +1,377 @@
+﻿<Window x:Class="Series_Tracker.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Series_Tracker" 
+        xmlns:viewmodels="clr-namespace:Series_Tracker.ViewModels"
+        d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
+        mc:Ignorable="d"
+        xmlns:helpers="clr-namespace:Series_Tracker.Helpers"
+        Title="Series Tracker" 
+        MinHeight="600" 
+        MinWidth="1200"
+        WindowStartupLocation="CenterScreen"
+        Icon="pack://application:,,,/Assets/img/TV256.ico"
+        >
+
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Cut"
+                        CanExecute="Cut_CanExecute"
+                        Executed="Cut_Executed"/>
+        <CommandBinding Command="ApplicationCommands.Copy"
+                        CanExecute="Copy_CanExecute"
+                        Executed="Copy_Executed"/>
+        <CommandBinding Command="ApplicationCommands.Paste"
+                        CanExecute="Paste_CanExecute"
+                        Executed="Paste_Executed"/>
+    </Window.CommandBindings>
+
+    <Grid MouseDown="MoveWindow">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Menu Bar -->
+        <Menu Grid.Row="0" Background="Transparent">
+            <MenuItem Header="_File">
+
+                <MenuItem Header="_Open files folder"
+                          Command="{Binding OpenFolderCommand}">
+                    <MenuItem.Icon>
+                        <TextBlock Style="{StaticResource IconTextAlignment}" 
+                                   FontFamily="{StaticResource IconsFont}" 
+                                   Text="&#xED25;"/>
+                    </MenuItem.Icon>
+
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="_Edit">
+                <MenuItem Header="_Cut"
+                          Command="ApplicationCommands.Cut">
+                    <MenuItem.Icon>
+                        <TextBlock Style="{StaticResource IconTextAlignment}"
+                                   FontFamily="{StaticResource IconsFont}"
+                                   Text="&#xE8C6;"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem Header="_Copy"
+                          Command="ApplicationCommands.Copy">
+                    <MenuItem.Icon>
+                        <TextBlock Style="{StaticResource IconTextAlignment}"
+                                   FontFamily="{StaticResource IconsFont}"
+                                   Text="&#xE8C8;"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem Header="_Paste"
+                          Command="ApplicationCommands.Paste">
+                    <MenuItem.Icon>
+                        <TextBlock Style="{StaticResource IconTextAlignment}"
+                                   FontFamily="{StaticResource IconsFont}"
+                                   Text="&#xE77F;"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="Bold"
+                          Command="{Binding BoldCommand}">
+                    <MenuItem.Icon>
+                        <TextBlock Style="{StaticResource IconTextAlignment}"
+                                   FontFamily="{StaticResource IconsFont}"
+                                   Text="&#xE8DD;"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Italics"
+                          Command="{Binding ItalicCommand}">
+                    <MenuItem.Icon>
+                        <TextBlock Style="{StaticResource IconTextAlignment}"
+                                   FontFamily="{StaticResource IconsFont}"
+                                   Text="&#xE8DB;"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Underline"
+                          Command="{Binding UnderlineCommand}">
+                    <MenuItem.Icon>
+                        <TextBlock Style="{StaticResource IconTextAlignment}"
+                   FontFamily="{StaticResource IconsFont}"
+                   Text="&#xE8DC;"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Strikethrough"
+                          Command="{Binding StrikethroughCommand}">
+                    <MenuItem.Icon>
+                        <TextBlock Style="{StaticResource IconTextAlignment}"
+                                   FontFamily="{StaticResource IconsFont}"
+                                   Text="&#xEDE0;"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            
+            <MenuItem Header="_Help">
+                <MenuItem Header="_About"
+                          Command="{Binding ShowAboutCommand}">
+                    <MenuItem.Icon>
+                        <TextBlock Style="{StaticResource IconTextAlignment}"
+                                   FontFamily="{StaticResource IconsFont}"
+                                   Text="&#xE946;"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+
+        <!-- Title Label -->
+        <Border Grid.Row="1"
+                BorderThickness="1"
+                BorderBrush="LightGray"
+                Margin="5"
+                Background="Transparent"
+                MouseDown="MoveWindow">
+
+            <TextBlock FontSize="28"
+                       FontFamily="Verdana"
+                       FontWeight="Bold"
+                       Margin="10"
+                       Text="{Binding AppTitle}"
+                       TextWrapping="Wrap"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       />
+
+        </Border>
+
+        <!-- Toolbar and platform selection -->
+        <DockPanel Grid.Row="2" Margin="5">
+
+            <!-- Formatting ToolBar -->
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+                <!-- Bold button -->
+                <Button Style="{StaticResource ToolBarRoundedButton}"
+                        Command="{Binding BoldCommand}">
+
+                    <TextBlock FontFamily="{StaticResource IconsFont}"
+                               Text="&#xE8DD;"
+                               FontSize="16">
+                    </TextBlock>
+
+                </Button>
+
+                <!-- Italics button -->
+                <Button Style="{StaticResource ToolBarRoundedButton}"
+                        Command="{Binding ItalicCommand}">
+
+                    <TextBlock FontFamily="{StaticResource IconsFont}"
+                               Text="&#xE8DB;"
+                               FontSize="16">
+                    </TextBlock>
+
+                </Button>
+
+                <!-- Underline button -->
+                <Button Style="{StaticResource ToolBarRoundedButton}"
+                        Command="{Binding UnderlineCommand}">
+
+                    <TextBlock FontFamily="{StaticResource IconsFont}"
+                                   Text="&#xE8DC;"
+                                   FontSize="16">
+                    </TextBlock>
+                </Button>
+
+                <!-- Strikethrough button -->
+                <Button Style="{StaticResource ToolBarRoundedButton}"
+                        Command="{Binding StrikethroughCommand}">
+                    <TextBlock FontFamily="{StaticResource IconsFont}"
+                                   Text="&#xEDE0;"
+                                   FontSize="16">
+                    </TextBlock>
+                </Button>
+
+                <!-- Separator -->
+                <Border Width="1"
+                    Margin="8"
+                    Background="LightGray"/>
+
+                <!-- Copy button -->
+                <Button Style="{StaticResource ToolBarRoundedButton}"
+                        Command="ApplicationCommands.Copy">
+
+                    <TextBlock FontFamily="{StaticResource IconsFont}"
+                                   Text="&#xE8C8;"
+                                   FontSize="16">
+                    </TextBlock>
+                </Button>
+
+                <!-- Cut button -->
+                <Button Style="{StaticResource ToolBarRoundedButton}"
+                        Command="ApplicationCommands.Cut">
+                    <TextBlock FontFamily="{StaticResource IconsFont}"
+                                   Text="&#xE8C6;"
+                                   FontSize="16">
+                    </TextBlock>
+                </Button>
+
+                <!-- Paste button -->
+                <Button Style="{StaticResource ToolBarRoundedButton}"
+                        Command="ApplicationCommands.Paste">
+                    <TextBlock FontFamily="{StaticResource IconsFont}"
+                                   Text="&#xE77F;"
+                                   FontSize="16">
+                    </TextBlock>
+                </Button>
+
+                <!-- Separator -->
+                <Border Width="1"
+                    Margin="8"
+                    Background="LightGray"/>
+
+                <!-- Font selection ComboBox -->
+                <ComboBox 
+                          MinWidth="200"
+                          HorizontalAlignment="Left" 
+                          Height="28"
+                          Margin="0,0,5,0"
+                          ItemsSource="{x:Static Fonts.SystemFontFamilies}"
+                          SelectedItem="{Binding SelectedFontFamily}"
+                          >
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Source}" FontFamily="{Binding}" FontSize="16"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <!-- Font size ComboBox -->
+                <ComboBox  
+                          Width="50"
+                          HorizontalAlignment="Left" 
+                          Height="28"
+                          Margin="0,0,5,0"
+                          ItemsSource="{Binding FontSizes}"
+                          SelectedItem="{Binding SelectedFontSize}"
+                          >
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <!-- Font size down -->
+                <Button Style="{StaticResource ToolBarRoundedButton}"
+                        Command="{Binding DecreaseFontSizeCommand}">
+                    <TextBlock FontFamily="{StaticResource IconsFont}"
+                            Text="&#xE8E7;"
+                            FontSize="16">
+                    </TextBlock>
+                </Button>
+
+                <!-- Font size up -->
+                <Button Style="{StaticResource ToolBarRoundedButton}"
+                        Command="{Binding IncreaseFontSizeCommand}">
+                    <TextBlock FontFamily="{StaticResource IconsFont}"
+                            Text="&#xE8E8;"
+                            FontSize="16">
+                    </TextBlock>
+                </Button>
+
+                <!--- Bullets -->
+                <Button Style="{StaticResource ToolBarRoundedButton}"
+                        Command="{Binding ToggleBulletsCommand}"
+                        >
+                    <TextBlock FontFamily="{StaticResource IconsFont}"
+                               Text="&#xE8FD;">
+                    </TextBlock>
+                </Button>
+            </StackPanel>
+
+
+            <!-- Platform options -->
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" >
+
+                <RadioButton Style="{StaticResource OptionButtonStyle}" Content="Netflix"
+                             GroupName="Platforms"
+                             IsChecked="{Binding SelectedPlatform,Converter={StaticResource EnumToBooleanConverter},ConverterParameter=Netflix}"/>
+
+                <RadioButton Style="{StaticResource OptionButtonStyle}" Content="AppleTV"
+                             GroupName="Platforms"
+                             IsChecked="{Binding SelectedPlatform,Converter={StaticResource EnumToBooleanConverter},ConverterParameter=AppleTV}"/>
+
+                <RadioButton Style="{StaticResource OptionButtonStyle}" Content="Amazon Prime"
+                             GroupName="Platforms"
+                             IsChecked="{Binding SelectedPlatform,Converter={StaticResource EnumToBooleanConverter},ConverterParameter=AmazonPrime}"/>
+
+                <RadioButton Style="{StaticResource OptionButtonStyle}" Content="HBO"
+                             GroupName="Platforms"
+                             IsChecked="{Binding SelectedPlatform,Converter={StaticResource EnumToBooleanConverter},ConverterParameter=HBO}"/>
+
+                <RadioButton Style="{StaticResource OptionButtonStyle}" Content="Disney+"
+                             GroupName="Platforms"
+                             IsChecked="{Binding SelectedPlatform,Converter={StaticResource EnumToBooleanConverter},ConverterParameter=DisneyPlus}"/>
+
+                <RadioButton Style="{StaticResource OptionButtonStyle}" Content="Hulu"
+                             GroupName="Platforms"
+                             IsChecked="{Binding SelectedPlatform,Converter={StaticResource EnumToBooleanConverter},ConverterParameter=Hulu}"/>
+
+                <RadioButton Style="{StaticResource OptionButtonStyle}" Content="Others"
+                             GroupName="Platforms"
+                             IsChecked="{Binding SelectedPlatform,Converter={StaticResource EnumToBooleanConverter},ConverterParameter=Others}"/>
+
+            </StackPanel>
+
+            <!-- The "space" between edition buttons and platforms -->
+            <Grid>
+                <Border Width="1"
+                    HorizontalAlignment="Center"
+                    Background="Transparent"
+                    />
+            </Grid>
+
+        </DockPanel>
+
+
+        <!-- Content and edition of File(s) -->
+        <RichTextBox Grid.Row="3"
+                     x:Name="EditorControl"
+                     IsDocumentEnabled="True"
+                     AcceptsTab="True"
+                     AcceptsReturn="True"
+                     VerticalScrollBarVisibility="Auto"
+                     Background="#FFFFF0"
+                     TextOptions.TextFormattingMode="Ideal"
+                     TextOptions.TextRenderingMode="Auto"
+                     Margin="5"
+                     Padding="5"
+                     helpers:RichTextBoxHelper.Document="{Binding Document}"
+                     Loaded="EditorLoaded"
+                     SelectionChanged="EditorControl_SelectionChanged"
+                     TextChanged="EditorControl_TextChanged"
+                     >
+
+        </RichTextBox>
+
+        <!-- Status Label -->
+        <TextBlock Grid.Row="4"
+                   FontStyle="Italic"
+                   Margin="10,0,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Text="{Binding LastSavedStatus}"
+                   />
+
+        <!-- Save Changes Button -->
+        <Button Grid.Row="4"
+                x:Name="btnSave"
+                Content="Save Changes"
+                Width="100"
+                Height="30"
+                Margin="10"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Command="{Binding SaveCommand}"
+                />
+    </Grid>
+</Window>
