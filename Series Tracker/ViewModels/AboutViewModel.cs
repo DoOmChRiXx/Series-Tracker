@@ -12,7 +12,7 @@ namespace Series_Tracker.ViewModels
             "and manage your watchlist to stay updated with new episodes.";
         public string OSVersion => PubVars.OSVersion;
         public string ImageIcon { get; } = "pack://Application:,,,/Assets/img/TV256.ico";
-        public string GitHubLink { get; } = "https://github.com/DoOmChRiXx";
+        public string GitHubLink { get; } = "https://github.com/DoOmChRiXx/Series-Tracker/";
         public AboutViewModel()
         {
             
