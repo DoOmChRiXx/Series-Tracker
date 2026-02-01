@@ -35,7 +35,7 @@ No database, no cloud, no complexity — just your list, your way.
 I provide two options:
 
 ### **1. Installer**
-Includes all dependencies and ensures a smooth setup.
+Ensures a smooth setup. If any dependency (such as .NET Runtime) is missing, it will ask you to install it first.
 
 ⚠️ **Windows 11 users:**  
 Smart App Control (SAC) may block the installer with [this warning](https://support.microsoft.com/en-us/windows/smart-app-control-has-blocked-part-of-this-app-0729fff1-48bf-4b25-aa97-632fe55ccca2)  
