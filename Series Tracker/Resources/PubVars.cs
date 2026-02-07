@@ -33,6 +33,7 @@ namespace Series_Tracker.Resources
         System.Runtime.InteropServices.RuntimeInformation.OSDescription;
 
         public static bool IsNotSingleton { get; set; } = false;
+        public static bool RtbChanged { get; set; } = false;
     }
 }
     

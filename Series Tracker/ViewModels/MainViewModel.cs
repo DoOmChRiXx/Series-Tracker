@@ -17,7 +17,7 @@ namespace Series_Tracker.ViewModels
         private readonly IWindowService _windowService;
         private bool _isUpdatingFromSelection;
         private FontFamily _selectedFontFamily;
-        private bool rtbChanged = false;
+        //private bool rtbChanged = false;
 
         public FontFamily SelectedFontFamily
         {
@@ -55,14 +55,14 @@ namespace Series_Tracker.ViewModels
             {
                 if(_selectedPlatform == value) return;
 
-                if (rtbChanged && PreviousPlatform is Platform oldPlatform)
+                if (PubVars.RtbChanged && PreviousPlatform is Platform oldPlatform)
                 {
                     // Optionally, prompt to save changes before switching platforms
                     MessageBoxResult result = MessageBox.Show("You have unsaved changes. Do you want to save before switching platforms?", "Unsaved Changes", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                     if (result == MessageBoxResult.Yes)
                     {
                         Save(oldPlatform);
-                        rtbChanged = false;
+                        PubVars.RtbChanged = false;
                     }
                 }
                 if(SetProperty(ref _selectedPlatform, value))
@@ -143,18 +143,18 @@ namespace Series_Tracker.ViewModels
                 Document.FontFamily = new FontFamily("Segoe UI");
                 Document.FontSize = 14;
                 LastSavedStatus = $"List your series to generate a new {SelectedPlatform} document";
-                rtbChanged = false;
+                PubVars.RtbChanged = false;
                 Editor.Focus();
                 return;
             }
             LastSavedStatus = $"Loaded {SelectedPlatform} at {System.DateTime.Now:t}";
-            rtbChanged = false;
+            PubVars.RtbChanged = false;
         }
 
         private void Save(Platform platform)
         {
             _platformFileService.Save(platform, Document);
-            rtbChanged = false;
+            PubVars.RtbChanged = false;
             LastSavedStatus = $"Saved {SelectedPlatform} at {System.DateTime.Now:t}";
         }
 
@@ -197,7 +197,7 @@ namespace Series_Tracker.ViewModels
 
         public void OnDocumentChanged(RichTextBox rtb)
         {
-            rtbChanged = true;
+            PubVars.RtbChanged = true;
             LastSavedStatus = "Changes NOT saved";
         }
 

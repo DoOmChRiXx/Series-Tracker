@@ -101,12 +101,14 @@ namespace Series_Tracker
         {
             base.OnClosing(e);
             if (PubVars.IsNotSingleton == true) return;
-            if (MessageBox.Show("Are you sure you want to exit?\n" +
-                "Unsaved changes will be lost!", "Confirm Exit", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.No)
+            if (PubVars.RtbChanged == true)
             {
-                e.Cancel = true;
+                if (MessageBox.Show("There are UNSAVED changes!\n" +
+                    "Are you sure you want to exit.", "Confirm Exit", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.No)
+                {
+                    e.Cancel = true;
+                }
             }
-
         }
     }
 }
