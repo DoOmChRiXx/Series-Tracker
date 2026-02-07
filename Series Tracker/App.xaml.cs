@@ -24,6 +24,7 @@ namespace Series_Tracker
                 MessageBox.Show("Another instance of the application is already running.", "Application Already Running", MessageBoxButton.OK, MessageBoxImage.Information);
                 Application.Current.Shutdown();
                 PubVars.IsNotSingleton = false;
+                MainWindow.Focus();
                 return;
             }
             base.OnStartup(e);

@@ -102,7 +102,7 @@ namespace Series_Tracker
             base.OnClosing(e);
             if (PubVars.IsNotSingleton == true) return;
             if (MessageBox.Show("Are you sure you want to exit?\n" +
-                "Changes will be lost!", "Confirm Exit", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.No)
+                "Unsaved changes will be lost!", "Confirm Exit", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.No)
             {
                 e.Cancel = true;
             }
